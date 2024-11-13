@@ -1,0 +1,29 @@
+---
+- name: Block port 2375 and port range 8000 to 8200 using UFW
+  hosts: 172.150.0.226
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Ensure UFW is installed
+      apt:
+        name: ufw
+        state: present
+
+    - name: Ensure UFW is enabled
+      ufw:
+        state: enabled
+        policy: allow
+        rule: allow
+        port: 22
+
+    - name: Block port 2375
+      ufw:
+        rule: deny
+        port: 2375
+        proto: tcp
+
+    - name: Block port range 8000 to 8200
+      ufw:
+        rule: deny
+        port: '8000:8200'
+        proto: tcp
