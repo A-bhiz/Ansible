@@ -1,0 +1,7 @@
+---
+- name: Ping Playbook to test connectivity
+  hosts: all         # Target all hosts in the inventory
+  gather_facts: no   # Skip gathering facts (for faster execution)
+  tasks:
+    - name: Ping the host
+      ansible.builtin.ping:
