@@ -1,6 +1,6 @@
 ---
 - name: Install and configure Nginx on CentOS
-  hosts: centos_servers  # Define your group of CentOS servers
+  hosts: all  # Define your group of CentOS servers
   become: true  # Run as sudo
   tasks:
 
