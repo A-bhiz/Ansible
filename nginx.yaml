@@ -1,0 +1,35 @@
+---
+- name: Install and configure Nginx on CentOS
+  hosts: centos_servers  # Define your group of CentOS servers
+  become: true  # Run as sudo
+  tasks:
+
+    - name: Install Nginx repository (CentOS 7+)
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install Nginx package
+      yum:
+        name: nginx
+        state: present
+
+    - name: Start and enable Nginx service
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Allow Nginx service in the firewall
+      firewalld:
+        service: nginx
+        permanent: yes
+        state: enabled
+        immediate: yes
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
