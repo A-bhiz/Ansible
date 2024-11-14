@@ -1,15 +1,12 @@
 ---
-- name: Add a new user to the system
-  hosts: all  # You can specify specific hosts or a group of hosts here
-  become: true  # This ensures the task is run with sudo (admin) privileges
-  vars:
-    ansible_python_interpreter: /usr/libexec/platform-python
+- name: Add a local user to Ubuntu
+  hosts: all
+  become: yes  # This makes sure Ansible runs the tasks with sudo privileges
   tasks:
-    - name: Create a new user
+    - name: Add a new user
       user:
-        name: "kranadmin"   # The username can be passed as a variable
-        state: present           # Ensures the user is present (created)
-        shell: /bin/bash         # Specify default shell for the user
-        create_home: yes         # Creates the user's home directory
-        comment: "New User"      # Optional: adds a comment/description
-
+        name: kranadmin        # Replace with the username you want to create
+        state: present       # Ensure the user is present (i.e., created)
+        shell: /bin/bash     # Set the shell for the user (optional)
+        password: "{{ 'password123' | password_hash('sha512') }}"  # Set password (hashed)
+        create_home: yes     # Ensure home directory is created
