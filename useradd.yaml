@@ -1,32 +1,13 @@
 ---
-- name: Create admin user "kran" on CentOS 9
-  hosts: all                   # Adjust to your inventory or target hosts
-  become: yes                  # Ensure we are using sudo to run tasks as root
+- name: Add a new user to the system
+  hosts: all  # You can specify specific hosts or a group of hosts here
+  become: true  # This ensures the task is run with sudo (admin) privileges
   tasks:
-    - name: Create the "kran" user
-      ansible.builtin.user:
-        name: kran
-        state: present
-        shell: /bin/bash
-        create_home: yes
-        comment: "Administrator User"
-        groups: wheel  # Add to the wheel group for sudo privileges
+    - name: Create a new user
+      user:
+        name: "kranadmin"   # The username can be passed as a variable
+        state: present           # Ensures the user is present (created)
+        shell: /bin/bash         # Specify default shell for the user
+        create_home: yes         # Creates the user's home directory
+        comment: "New User"      # Optional: adds a comment/description
 
-    - name: Ensure "kran" is in the sudoers file (wheel group has sudo rights)
-      ansible.builtin.linein_file:
-        path: /etc/sudoers
-        regexp: '^%wheel'
-        line: '%wheel  ALL=(ALL)       ALL'  # This ensures the wheel group has sudo privileges
-        validate: '/usr/sbin/visudo -cf %s'  # This runs visudo to check for syntax errors
-
-    - name: Set password for "kran" user (optional)
-      ansible.builtin.user:
-        name: kran
-        password: "{{ 'securepassword' | passwd('sha512') }}"  # Replace with a hashed password
-
-    - name: Ensure the home directory for "kran" has correct permissions
-      ansible.builtin.file:
-        path: "/home/kran"
-        owner: kran
-        group: kran
-        mode: '0755'
