@@ -2,6 +2,8 @@
 - name: Add a new user to the system
   hosts: all  # You can specify specific hosts or a group of hosts here
   become: true  # This ensures the task is run with sudo (admin) privileges
+  vars:
+    ansible_python_interpreter: /usr/libexec/platform-python
   tasks:
     - name: Create a new user
       user:
