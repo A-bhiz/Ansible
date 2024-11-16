@@ -1,0 +1,24 @@
+---
+- name: Install Git on Windows
+  hosts: windows
+  gather_facts: no
+  tasks:
+    - name: Download Git MSI installer
+      win_get_url:
+        url: https://github.com/git-for-windows/git/releases/download/v2.39.0.windows.1/Git-2.39.0-64-bit.exe  # Update the URL for the latest version
+        dest: C:\Temp\Git-Installer.exe
+
+    - name: Install Git using MSI
+      win_package:
+        path: C:\Temp\Git-Installer.exe
+        product_id: 'Git'
+        state: present
+        arguments: '/SILENT'  # Runs the installer in silent mode without prompts
+
+    - name: Verify Git installation
+      win_command: git --version
+      register: git_version
+
+    - name: Show Git version
+      debug:
+        msg: "Git version installed: {{ git_version.stdout }}"
