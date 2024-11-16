@@ -1,6 +1,6 @@
 ---
 - name: Install Git on Windows
-  hosts: windows
+  hosts: all
   gather_facts: no
   tasks:
     - name: Download Git MSI installer
