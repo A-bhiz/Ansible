@@ -10,5 +10,10 @@ name=nginx stable repo
 baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
 gpgcheck=1
 enabled=1
+
+
+
+
+sudo dnf install php php-fpm php-mysqlnd php-xml php-gd php-mbstring php-curl -y
 gpgkey=https://nginx.org/keys/nginx_signing.key
 module_hotfixes=true
