@@ -52,3 +52,14 @@ cd /var/www/html/wordpress
 sudo wget https://wordpress.org/latest.tar.gz
 sudo tar -xzf latest.tar.gz --strip-components=1
 sudo rm -f latest.tar.gz
+
+
+
+
+
+
+
+CREATE DATABASE wordpress;
+GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost' IDENTIFIED BY 'your_mysql_root_password';
+FLUSH PRIVILEGES;
+EXIT;
