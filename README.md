@@ -1,4 +1,4 @@
-# Ansible
+up# Ansible
 
 https://www.tecmint.com/install-wordpress-nginx-rhel-linux/
 
@@ -63,3 +63,31 @@ CREATE DATABASE wordpress;
 GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost' IDENTIFIED BY 'your_mysql_root_password';
 FLUSH PRIVILEGES;
 EXIT;
+
+
+
+
+
+
+server {
+    listen 80 default_server;
+    server_name _;
+
+    root /var/www/html/wordpress;  # Path where WordPress files are located
+    index index.php index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass unix:/run/php-fpm/www.sock;  # Path to PHP-FPM socket
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
