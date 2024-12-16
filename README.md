@@ -43,3 +43,12 @@ module_hotfixes=true
         deny all;
     }
 }
+
+
+
+
+
+cd /var/www/html/wordpress
+sudo wget https://wordpress.org/latest.tar.gz
+sudo tar -xzf latest.tar.gz --strip-components=1
+sudo rm -f latest.tar.gz
